@@ -1,14 +1,13 @@
-# 
+# Title 
+Understanding Regex Password Validation
 
-# Title Understanding Regex Password Validation
-
-This tutorial will walk you through a specific regular expression (regex) designed for password validation. With this regex, we'll be enforcing security and protecting consumer privacy. 
+This tutorial will walk you through a specific regular expression (regex) designed for password validation. banking, credit card comppanies utilize regex enforce password requirements to protect and secure your assets and your privacy,  
 
 ## Summary
 
-Before we proceed, remember that regex is a powerful tool for defining search patterns, which can be used for string manipulations, input validation, and more.
+Regex is a powerful tool used for defining search patterns for purposes of inclusion, exclusion or matching. Regex can be used for string manipulations, input validation, and more.
 
-This regex will focus on the following rules:
+This regex will focus on password validatuin following rules:
 
 The first character must be a capital letter
 The length must be between 7 and 9 characters
@@ -21,15 +20,11 @@ It cannot contain white spaces
 
 - [Anchors](#anchors)
 - [Quantifiers](#quantifiers)
-- [OR Operator](#or-operator)
 - [Character Classes](#character-classes)
-- [Flags](#flags)
 - [Grouping and Capturing](#grouping-and-capturing)
-- [Bracket Expressions](#bracket-expressions)
-- [Greedy and Lazy Match](#greedy-and-lazy-match)
-- [Boundaries](#boundaries)
-- [Back-references](#back-references)
-- [Look-ahead and Look-behind](#look-ahead-and-look-behind)
+- [Look-ahead and Look-behind](#look-ahead-and-look-behind) 
+- [Javascript implementation](#Javascript-implementation) 
+
 
 ## Regex Components
 
@@ -39,7 +34,6 @@ Anchors are used to specify the position of the pattern in the string. ^ is used
     Example: ^[A-Z]
 
 The ^ anchor ensures that the first character is a capital letter.
-
     
 ### Quantifiers
 Quantifiers specify the quantity of characters. {7,9} means between 7 and 9 characters.
@@ -70,4 +64,28 @@ Lookaheads are used to assert a certain pattern is ahead. Negative lookaheads as
 Example: (?!.*password)(?!.*Password)
 
 The (?!.*password) and (?!.*Password) lookaheads ensure that the word "password" or "Password" are not included in the password.
+
+### Javascript implementation
+
+function validatePassword(password) {
+    // The regular expression
+    const regex = /^([A-Z](?!.*password)(?!.*Password)(?=.*\d)(?=.*[^\s*%]).{6,8})$/;
+
+    // Test the password
+    return regex.test(password);
+  
+}
+
+Test cases:
+
+console.log(validatePassword("Abcdef1#"));  // Outputs: true
+console.log(validatePassword("abcdef1#"));  // Outputs: false (no capital letter at the beginning)
+console.log(validatePassword("Abcdefgh1#"));  // Outputs: true
+console.log(validatePassword("Abcdefghij1#"));  // Outputs: false (more than 9 characters)
+console.log(validatePassword("Abcpassword1#"));  // Outputs: false (contains the word "password")
+console.log(validatePassword("Abcdef1"));  // Outputs: false (no special character)
+console.log(validatePassword("Abcdef1*"));  // Outputs: false (special character is "*")
+console.log(validatePassword("Abc def1#"));  // Outputs: false (contains whitespace)
+
 ## Author
+bhamilton68
